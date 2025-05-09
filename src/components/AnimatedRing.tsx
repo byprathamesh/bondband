@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { Heart, CircleDot } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -109,73 +108,26 @@ const AnimatedRing = () => {
           perspective: "1000px"
         }}
       >
-        {/* Outer ring - metallic appearance with 3D effect */}
-        <div className="absolute inset-0 rounded-full border-[16px] transform-style-3d ring-shadow"
+        {/* Outer metallic ring with 3D effect and shadow */}
+        <div className="absolute inset-0 rounded-full"
              style={{ 
-               background: 'linear-gradient(135deg, #e2e2e2, #b1b1b1, #e2e2e2)',
-               transform: 'translateZ(5px)',
+               background: 'radial-gradient(circle at 60% 30%, #fff 0%, #e2e2e2 40%, #b1b1b1 100%)',
+               boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)',
+               zIndex: 2
              }}>
+          {/* Shine arc removed */}
         </div>
-        
-        {/* Middle ring with depth */}
-        <div className="absolute inset-8 rounded-full border-[12px] transform-style-3d"
-             style={{
-               background: 'linear-gradient(135deg, #999, #333, #999)',
-               transform: 'translateZ(10px)',
-             }}>
-        </div>
-        
-        {/* Inner ring with shine effect */}
-        <div className="absolute inset-20 rounded-full bg-black border-[8px] border-brandPink transform-style-3d"
-             style={{ transform: 'translateZ(15px)' }}>
-          {/* Shine effects */}
-          <div className="absolute top-0 left-1/4 w-1/2 h-[15%] bg-white/20 rounded-full blur-sm"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-1/3 h-[8%] bg-white/10 rounded-full blur-sm"></div>
-        </div>
-        
-        {/* Center of the ring with heart */}
-        <div className="absolute inset-0 flex items-center justify-center transform-style-3d"
+        {/* Hollow center (transparent) to create a donut/ring effect - make it smaller for a thinner ring */}
+        <div className="absolute inset-12 rounded-full bg-black/95 z-10 border-0"></div>
+        {/* Center heart floating in the middle, no solid background */}
+        <div className="absolute inset-0 flex items-center justify-center transform-style-3d pointer-events-none"
              style={{ transform: 'translateZ(20px)' }}>
-          <div className="relative w-36 h-36 bg-black rounded-full border-4 border-brandPink flex items-center justify-center">
-            <Heart 
-              className="text-brandPink h-14 w-14 animate-pulse"
-              fill="rgba(255,79,147,0.8)"
-            />
-          </div>
+          <Heart 
+            className="text-brandPink h-14 w-14 animate-pulse drop-shadow-lg"
+            fill="rgba(255,79,147,0.8)"
+            style={{ filter: 'drop-shadow(0 0 8px #ff4f93cc)' }}
+          />
         </div>
-        
-        {/* Interactive hotspots for each feature - these will float around the ring */}
-        {[0, 1, 2, 3, 4].map((section) => {
-          // Calculate position with slight offset for 3D effect
-          const angle = section * (2 * Math.PI / 5);
-          const x = 50 + 42 * Math.cos(angle);
-          const y = 50 + 42 * Math.sin(angle);
-          const zOffset = Math.sin(angle) * 5;
-          
-          return (
-            <Link 
-              key={`hotspot-${section}`}
-              to={featureRoutes[section]}
-              className={`absolute w-12 h-12 bg-black rounded-full cursor-pointer hover:bg-brandPink/40 transition-all duration-300 flex items-center justify-center z-30 transform-style-3d ${activeSection === section ? 'border-2 border-brandPink' : 'border border-white/30'}`}
-              style={{ 
-                top: `${y}%`,
-                left: `${x}%`,
-                transform: `translate(-50%, -50%) translateZ(${25 + zOffset}px)`,
-                boxShadow: activeSection === section ? '0 0 15px rgba(255,79,147,0.8)' : 'none'
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveSection(section);
-                // Short delay before navigation to show the active state
-                setTimeout(() => {
-                  window.location.href = featureRoutes[section];
-                }, 300);
-              }}
-            >
-              <CircleDot className={`w-6 h-6 ${activeSection === section ? 'text-brandPink' : 'text-white/70'}`} />
-            </Link>
-          );
-        })}
       </div>
       
       {/* Feature label */}
@@ -183,7 +135,6 @@ const AnimatedRing = () => {
         <h3 className="text-2xl font-semibold text-gradient-pink transition-all duration-300">
           {featureNames[activeSection]}
         </h3>
-        <p className="text-white/60 text-sm mt-2">Tap to explore</p>
       </div>
       
       {/* Play/Pause rotation button */}

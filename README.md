@@ -1,24 +1,12 @@
-# Welcome to your Lovable project
+# BondBand
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/d39510ec-0385-4acb-be15-e296c881161f
+**URL**: <YOUR_PROJECT_URL>
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/d39510ec-0385-4acb-be15-e296c881161f) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+You can edit this application using your preferred IDE or directly in GitHub. The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
@@ -62,12 +50,10 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/d39510ec-0385-4acb-be15-e296c881161f) and click on Share -> Publish.
+You can deploy this project using your preferred hosting provider (e.g., Vercel, Netlify, etc.).
 
-## Can I connect a custom domain to my Lovable project?
+## Can I connect a custom domain to my BondBand project?
 
 Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To connect a domain, follow your hosting provider's instructions for custom domains.

@@ -1,4 +1,18 @@
+BondBand
+
 # BondBand
+
+A smart ring for couples to stay connected—share heartbeats, send vibration hugs, and make contactless payments, all from your finger.
+
+**Tech:** React • TypeScript • Vite • Tailwind CSS
+
+## Quick Start
+```sh
+npm install
+npm run dev
+```
+
+Made with ❤️ for connected lives.
 
 ## Project info
 
@@ -37,20 +51,6 @@ npm run dev
 - Select the "Codespaces" tab.
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-You can deploy this project using your preferred hosting provider (e.g., Vercel, Netlify, etc.).
 
 ## Can I connect a custom domain to my BondBand project?
 

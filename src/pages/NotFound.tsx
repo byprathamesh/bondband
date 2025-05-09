@@ -1,5 +1,8 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+
+import { Link } from 'react-router-dom';
+import { Heart } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,13 +15,16 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen bg-black flex items-center justify-center px-6">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+        <Heart className="h-20 w-20 text-brandPink mx-auto mb-6" />
+        <h1 className="text-6xl font-bold mb-4 text-white">404</h1>
+        <p className="text-2xl text-white/80 mb-8">
+          Oops! This page has lost its connection.
+        </p>
+        <Link to="/" className="btn-pink inline-block">
+          Return to Homepage
+        </Link>
       </div>
     </div>
   );

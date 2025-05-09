@@ -78,6 +78,22 @@
     content: '';
     @apply absolute top-0 left-1/4 -translate-x-1/2 w-[300px] h-[300px] bg-brandPink/20 rounded-full blur-[100px] -z-10;
   }
+  
+  /* 3D Transform Styles */
+  .perspective {
+    perspective: 1000px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .ring-shadow {
+    box-shadow: 
+      inset 0 0 20px rgba(0,0,0,0.2),
+      0 0 15px rgba(0,0,0,0.3),
+      0 5px 20px rgba(0,0,0,0.4);
+  }
 }
 
 /* New animations */

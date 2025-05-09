@@ -1,12 +1,15 @@
 
-import React, { useEffect, useState } from 'react';
-import { Heart } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Heart, CircleDot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AnimatedRing = () => {
   const [activeSection, setActiveSection] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isRotating, setIsRotating] = useState(true);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const [rotationX, setRotationX] = useState(0);
+  const [rotationY, setRotationY] = useState(0);
   
   // Colors for the different sections of the ring
   const sectionColors = [
@@ -44,44 +47,95 @@ const AnimatedRing = () => {
       return () => clearInterval(interval);
     }
   }, [isHovered, isRotating]);
+
+  useEffect(() => {
+    if (!isRotating || !ringRef.current) return;
+    
+    let animationFrameId: number;
+    let angle = 0;
+    
+    const animate = () => {
+      angle += 0.005;
+      
+      if (ringRef.current) {
+        setRotationX(Math.sin(angle) * 15);
+        setRotationY(Math.cos(angle) * 15);
+      }
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isRotating]);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isHovered && ringRef.current) {
+      const rect = ringRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      // Calculate rotation based on mouse position relative to center
+      const rotX = ((e.clientY - centerY) / 10) * -1; // Invert Y axis
+      const rotY = (e.clientX - centerX) / 10;
+      
+      setRotationX(rotX);
+      setRotationY(rotY);
+    }
+  };
   
   return (
     <div 
-      className="relative w-full min-h-[400px] flex items-center justify-center"
+      className="relative w-full min-h-[500px] flex items-center justify-center perspective"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
     >
       {/* Background glow effect */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className={`absolute w-64 h-64 rounded-full blur-3xl transition-all duration-700 ease-in-out`} 
+        <div className={`absolute w-80 h-80 rounded-full blur-3xl transition-all duration-700 ease-in-out`} 
             style={{ backgroundColor: sectionColors[activeSection], opacity: 0.5 }} />
       </div>
       
-      {/* Ring structure - more realistic looking */}
-      <div className="relative w-72 h-72">
-        {/* Outer ring - metallic appearance */}
-        <div className="absolute inset-0 rounded-full border-[12px] bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 shadow-lg"></div>
-        
-        {/* Middle ring - subtle depth */}
-        <div className="absolute inset-4 rounded-full border-[10px] border-gray-700 opacity-30"></div>
-        
-        {/* Inner ring with shine effect */}
-        <div className="absolute inset-12 rounded-full bg-black border-[6px] border-brandPink">
-          {/* Shine effect */}
-          <div className="absolute top-0 left-1/4 w-1/2 h-[10%] bg-white/20 rounded-full blur-sm"></div>
+      {/* 3D Ring structure with transform */}
+      <div 
+        ref={ringRef}
+        className="relative w-80 h-80 transform-style-3d transition-transform duration-300 ease-out"
+        style={{ 
+          transform: `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`,
+          perspective: "1000px"
+        }}
+      >
+        {/* Outer ring - metallic appearance with 3D effect */}
+        <div className="absolute inset-0 rounded-full border-[16px] transform-style-3d ring-shadow"
+             style={{ 
+               background: 'linear-gradient(135deg, #e2e2e2, #b1b1b1, #e2e2e2)',
+               transform: 'translateZ(5px)',
+             }}>
         </div>
         
-        {/* Rotating light effect */}
-        <div 
-          className="absolute inset-16 rounded-full border-4 border-brandPink/50 animate-spin-slow"
-          style={{ 
-            animationDuration: '15s',
-            background: 'linear-gradient(135deg, rgba(255,79,147,0.3) 0%, rgba(0,0,0,0) 50%, rgba(255,79,147,0.3) 100%)'
-          }}
-        ></div>
+        {/* Middle ring with depth */}
+        <div className="absolute inset-8 rounded-full border-[12px] transform-style-3d"
+             style={{
+               background: 'linear-gradient(135deg, #999, #333, #999)',
+               transform: 'translateZ(10px)',
+             }}>
+        </div>
+        
+        {/* Inner ring with shine effect */}
+        <div className="absolute inset-20 rounded-full bg-black border-[8px] border-brandPink transform-style-3d"
+             style={{ transform: 'translateZ(15px)' }}>
+          {/* Shine effects */}
+          <div className="absolute top-0 left-1/4 w-1/2 h-[15%] bg-white/20 rounded-full blur-sm"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-1/3 h-[8%] bg-white/10 rounded-full blur-sm"></div>
+        </div>
         
         {/* Center of the ring with heart */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center transform-style-3d"
+             style={{ transform: 'translateZ(20px)' }}>
           <div className="relative w-36 h-36 bg-black rounded-full border-4 border-brandPink flex items-center justify-center">
             <Heart 
               className="text-brandPink h-14 w-14 animate-pulse"
@@ -90,51 +144,59 @@ const AnimatedRing = () => {
           </div>
         </div>
         
-        {/* Feature label */}
-        <div className="absolute -bottom-16 left-0 right-0 text-center">
-          <h3 className="text-xl font-semibold text-gradient-pink transition-all duration-300">
-            {featureNames[activeSection]}
-          </h3>
-          <p className="text-white/60 text-sm mt-2">Tap to explore</p>
-        </div>
-        
-        {/* Interactive hotspots for each feature */}
-        {[0, 1, 2, 3, 4].map((section) => (
-          <Link 
-            key={`hotspot-${section}`}
-            to={featureRoutes[section]}
-            className={`absolute w-10 h-10 bg-black rounded-full cursor-pointer hover:bg-brandPink/40 transition-all duration-300 flex items-center justify-center z-30 ${activeSection === section ? 'border-2 border-brandPink' : 'border border-white/30'}`}
-            style={{ 
-              top: `${50 + 40 * Math.sin(section * (2 * Math.PI / 5))}%`,
-              left: `${50 + 40 * Math.cos(section * (2 * Math.PI / 5))}%`,
-              transform: 'translate(-50%, -50%)',
-              boxShadow: activeSection === section ? '0 0 15px rgba(255,79,147,0.8)' : 'none'
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveSection(section);
-              // Short delay before navigation to show the active state
-              setTimeout(() => {
-                window.location.href = featureRoutes[section];
-              }, 300);
-            }}
-          >
-            <span className="text-xs font-bold text-white">{section + 1}</span>
-          </Link>
-        ))}
-        
-        {/* Play/Pause rotation button */}
-        <button 
-          onClick={() => setIsRotating(!isRotating)}
-          className="absolute right-0 bottom-0 bg-black/50 rounded-full p-2 hover:bg-brandPink/30 transition-colors"
-        >
-          {isRotating ? (
-            <span className="text-xs text-white">◼ Pause</span>
-          ) : (
-            <span className="text-xs text-white">▶ Play</span>
-          )}
-        </button>
+        {/* Interactive hotspots for each feature - these will float around the ring */}
+        {[0, 1, 2, 3, 4].map((section) => {
+          // Calculate position with slight offset for 3D effect
+          const angle = section * (2 * Math.PI / 5);
+          const x = 50 + 42 * Math.cos(angle);
+          const y = 50 + 42 * Math.sin(angle);
+          const zOffset = Math.sin(angle) * 5;
+          
+          return (
+            <Link 
+              key={`hotspot-${section}`}
+              to={featureRoutes[section]}
+              className={`absolute w-12 h-12 bg-black rounded-full cursor-pointer hover:bg-brandPink/40 transition-all duration-300 flex items-center justify-center z-30 transform-style-3d ${activeSection === section ? 'border-2 border-brandPink' : 'border border-white/30'}`}
+              style={{ 
+                top: `${y}%`,
+                left: `${x}%`,
+                transform: `translate(-50%, -50%) translateZ(${25 + zOffset}px)`,
+                boxShadow: activeSection === section ? '0 0 15px rgba(255,79,147,0.8)' : 'none'
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveSection(section);
+                // Short delay before navigation to show the active state
+                setTimeout(() => {
+                  window.location.href = featureRoutes[section];
+                }, 300);
+              }}
+            >
+              <CircleDot className={`w-6 h-6 ${activeSection === section ? 'text-brandPink' : 'text-white/70'}`} />
+            </Link>
+          );
+        })}
       </div>
+      
+      {/* Feature label */}
+      <div className="absolute -bottom-10 left-0 right-0 text-center">
+        <h3 className="text-2xl font-semibold text-gradient-pink transition-all duration-300">
+          {featureNames[activeSection]}
+        </h3>
+        <p className="text-white/60 text-sm mt-2">Tap to explore</p>
+      </div>
+      
+      {/* Play/Pause rotation button */}
+      <button 
+        onClick={() => setIsRotating(!isRotating)}
+        className="absolute right-0 bottom-0 bg-black/50 rounded-full p-2 hover:bg-brandPink/30 transition-colors"
+      >
+        {isRotating ? (
+          <span className="text-xs text-white">◼ Pause</span>
+        ) : (
+          <span className="text-xs text-white">▶ Play</span>
+        )}
+      </button>
     </div>
   );
 };

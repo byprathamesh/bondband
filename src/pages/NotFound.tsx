@@ -15,14 +15,14 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-6">
+    <div className="min-h-screen hero-gradient flex items-center justify-center px-6">
       <div className="text-center">
-        <Heart className="h-20 w-20 text-brandPink mx-auto mb-6" />
+        <Heart className="h-20 w-20 text-brandPink mx-auto mb-6 animate-pulse" />
         <h1 className="text-6xl font-bold mb-4 text-white">404</h1>
         <p className="text-2xl text-white/80 mb-8">
           Oops! This page has lost its connection.
         </p>
-        <Link to="/" className="btn-pink inline-block">
+        <Link to="/" className="btn-pink inline-block animate-fade-in">
           Return to Homepage
         </Link>
       </div>

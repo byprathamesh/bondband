@@ -57,25 +57,34 @@ const AnimatedRing = () => {
             style={{ backgroundColor: sectionColors[activeSection], opacity: 0.5 }} />
       </div>
       
-      {/* Main ring */}
+      {/* Ring structure - more realistic looking */}
       <div className="relative w-72 h-72">
-        {/* Outer ring - teal color */}
-        <div className="absolute inset-0 rounded-full border-8 border-[#00CED1] opacity-70"></div>
+        {/* Outer ring - metallic appearance */}
+        <div className="absolute inset-0 rounded-full border-[12px] bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 shadow-lg"></div>
         
-        {/* Middle ring - gray/silver */}
-        <div className="absolute inset-2 rounded-full border-4 border-gray-400 opacity-50"></div>
+        {/* Middle ring - subtle depth */}
+        <div className="absolute inset-4 rounded-full border-[10px] border-gray-700 opacity-30"></div>
         
-        {/* Inner ring - pink/brand color, this one rotates */}
+        {/* Inner ring with shine effect */}
+        <div className="absolute inset-12 rounded-full bg-black border-[6px] border-brandPink">
+          {/* Shine effect */}
+          <div className="absolute top-0 left-1/4 w-1/2 h-[10%] bg-white/20 rounded-full blur-sm"></div>
+        </div>
+        
+        {/* Rotating light effect */}
         <div 
-          className="absolute inset-8 rounded-full border-4 border-brandPink animate-spin-slow"
-          style={{ animationDuration: '15s' }}
+          className="absolute inset-16 rounded-full border-4 border-brandPink/50 animate-spin-slow"
+          style={{ 
+            animationDuration: '15s',
+            background: 'linear-gradient(135deg, rgba(255,79,147,0.3) 0%, rgba(0,0,0,0) 50%, rgba(255,79,147,0.3) 100%)'
+          }}
         ></div>
         
         {/* Center of the ring with heart */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative w-40 h-40 bg-black rounded-full border-4 border-brandPink flex items-center justify-center">
+          <div className="relative w-36 h-36 bg-black rounded-full border-4 border-brandPink flex items-center justify-center">
             <Heart 
-              className="text-brandPink h-16 w-16 animate-pulse"
+              className="text-brandPink h-14 w-14 animate-pulse"
               fill="rgba(255,79,147,0.8)"
             />
           </div>
@@ -99,6 +108,7 @@ const AnimatedRing = () => {
               top: `${50 + 40 * Math.sin(section * (2 * Math.PI / 5))}%`,
               left: `${50 + 40 * Math.cos(section * (2 * Math.PI / 5))}%`,
               transform: 'translate(-50%, -50%)',
+              boxShadow: activeSection === section ? '0 0 15px rgba(255,79,147,0.8)' : 'none'
             }}
             onClick={(e) => {
               e.preventDefault();

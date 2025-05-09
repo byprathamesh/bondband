@@ -4,10 +4,9 @@ import {
   Heart, 
   Activity, 
   Bell, 
-  Shield, 
-  MapPin, 
-  Battery, 
+  Nfc, 
   User, 
+  Battery, 
   Clock
 } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
@@ -39,7 +38,6 @@ const Index = () => {
               </div>
             </div>
             <div className="relative">
-              {/* Replacing static image with animated ring */}
               <AnimatedRing />
             </div>
           </div>
@@ -98,34 +96,21 @@ const Index = () => {
               </p>
             </Link>
 
-            {/* Feature 4 */}
-            <Link to="/safety" className="feature-card group animate-fade-in" style={{animationDelay: "0.4s"}}>
+            {/* Feature 4 - NFC Payments (Replaced Safety) */}
+            <Link to="/nfc-payments" className="feature-card group animate-fade-in" style={{animationDelay: "0.4s"}}>
               <div className="mb-4 text-brandPink">
-                <Shield className="w-12 h-12" />
+                <Nfc className="w-12 h-12" />
               </div>
               <h3 className="text-xl font-semibold mb-2 group-hover:text-brandPink transition-colors">
-                Safety & Emergency
+                NFC & UPI Payments
               </h3>
               <p className="text-white/70">
-                Fall detection, abnormal heart rate alerts, and SOS functionality for emergencies.
+                Make contactless payments with just a tap of your ring. UPI integration for quick transfers.
               </p>
             </Link>
 
-            {/* Feature 5 */}
-            <Link to="/privacy" className="feature-card group animate-fade-in" style={{animationDelay: "0.5s"}}>
-              <div className="mb-4 text-brandPink">
-                <MapPin className="w-12 h-12" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-brandPink transition-colors">
-                Location & Privacy
-              </h3>
-              <p className="text-white/70">
-                Optional real-time location sharing with full privacy controls and end-to-end encryption.
-              </p>
-            </Link>
-
-            {/* Feature 6 */}
-            <Link to="/design" className="feature-card group animate-fade-in" style={{animationDelay: "0.6s"}}>
+            {/* Feature 5 - Design (Replaced Privacy) */}
+            <Link to="/design" className="feature-card group animate-fade-in" style={{animationDelay: "0.5s"}}>
               <div className="mb-4 text-brandPink">
                 <User className="w-12 h-12" />
               </div>
@@ -137,8 +122,8 @@ const Index = () => {
               </p>
             </Link>
 
-            {/* Feature 7 */}
-            <Link to="/battery" className="feature-card group animate-fade-in" style={{animationDelay: "0.7s"}}>
+            {/* Feature 6 */}
+            <Link to="/battery" className="feature-card group animate-fade-in" style={{animationDelay: "0.6s"}}>
               <div className="mb-4 text-brandPink">
                 <Battery className="w-12 h-12" />
               </div>
@@ -150,8 +135,8 @@ const Index = () => {
               </p>
             </Link>
 
-            {/* Feature 8 */}
-            <Link to="/solo-mode" className="feature-card group animate-fade-in" style={{animationDelay: "0.8s"}}>
+            {/* Feature 7 */}
+            <Link to="/solo-mode" className="feature-card group animate-fade-in" style={{animationDelay: "0.7s"}}>
               <div className="mb-4 text-brandPink">
                 <Clock className="w-12 h-12" />
               </div>
@@ -162,6 +147,13 @@ const Index = () => {
                 All features work independently for solo users with personal tracking and reminders.
               </p>
             </Link>
+
+            {/* Feature 8 - Empty space for balance */}
+            <div className="feature-card group animate-fade-in bg-gradient-to-br from-brandPink/10 to-transparent border-dashed border-brandPink/30" style={{animationDelay: "0.8s"}}>
+              <div className="flex items-center justify-center h-full">
+                <p className="text-white/50 text-center">More exciting features coming soon...</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

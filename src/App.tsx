@@ -15,6 +15,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import DesignPage from "./pages/DesignPage";
 import BatteryPage from "./pages/BatteryPage";
 import SoloModePage from "./pages/SoloModePage";
+import NFCPaymentsPage from "./pages/NFCPaymentsPage";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/design" element={<DesignPage />} />
           <Route path="/battery" element={<BatteryPage />} />
           <Route path="/solo-mode" element={<SoloModePage />} />
+          <Route path="/nfc-payments" element={<NFCPaymentsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -117,6 +117,14 @@ export default {
 					'50%': {
 						'background-position': '100% 50%'
 					}
+				},
+				'spin-slow': {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
+					}
 				}
 			},
 			animation: {
@@ -125,6 +133,7 @@ export default {
 				'pulse-ring': 'pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				'float': 'float 6s ease-in-out infinite',
 				'gradient-x': 'gradient-x 15s ease infinite',
+				'spin-slow': 'spin-slow 20s linear infinite'
 			}
 		}
 	},
